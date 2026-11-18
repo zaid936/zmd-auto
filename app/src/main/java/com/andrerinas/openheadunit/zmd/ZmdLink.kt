@@ -35,6 +35,8 @@ object ZmdLink {
     const val START = "start"
     /** ZMD Car asked to connect WIRELESSLY to the phone it saw on Bluetooth; waiting for it on Wi-Fi. */
     const val WIRELESS = "wireless"
+    /** Self mode: Android Auto from the Android Auto app on this screen itself (no phone). */
+    const val SELF = "self"
     /** Android's «allow USB» prompt is up for ZMD Auto; the user has to answer it. */
     const val PERMISSION_ASK = "permission"
     /** Asking the phone to switch into Android Auto mode (it drops off the cable and comes back). */
@@ -67,6 +69,8 @@ object ZmdLink {
     const val OTHER = "other"
     /** Wireless: the phone never came over Wi-Fi (its Android Auto wireless off, Wi-Fi off, too far...). */
     const val WIRELESS_TIMEOUT = "wireless_timeout"
+    /** Self mode: the Android Auto app's «head unit server» isn't running (it must be started in its developer settings). */
+    const val SELF_NO_SERVER = "self_no_server"
 
     /** How long the phone may take to come back in Android Auto mode after the switch request. */
     private const val SWITCH_TIMEOUT_MS = 12_000L
@@ -197,6 +201,7 @@ object ZmdLink {
             SWITCHING -> Triple(SWITCH_TIMEOUT_MS, NO_RESPONSE, "the phone did not come back in Android Auto mode")
             START -> Triple(START_TIMEOUT_MS, NO_PHONE, "nothing to connect to on the cable")
             WIRELESS -> Triple(WIRELESS_TIMEOUT_MS, WIRELESS_TIMEOUT, "the phone did not come over Wi-Fi")
+            SELF -> Triple(30_000L, SELF_NO_SERVER, "the Android Auto app on this screen did not answer")
             else -> return
         }
         main.postAtTime({ if (phase == state) fail(ctx, reason, detail) }, WATCHDOG, SystemClock.uptimeMillis() + timeout)

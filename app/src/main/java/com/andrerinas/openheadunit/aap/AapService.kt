@@ -3081,6 +3081,7 @@ class AapService : Service(), UsbReceiver.Listener {
 
     private fun startSelfMode() {
         selfMode = true
+        com.andrerinas.openheadunit.zmd.ZmdLink.send(this, com.andrerinas.openheadunit.zmd.ZmdLink.SELF)
 
         serviceScope.launch(Dispatchers.Main) {
             if (isAaVersion174OrHigher()) {
@@ -3091,11 +3092,9 @@ class AapService : Service(), UsbReceiver.Listener {
                 }
                 if (!success && !commManager.isConnected) {
                     AppLog.w("SelfMode: Headunit Server (127.0.0.1:5277) is NOT running.")
-                    ToastUtils.showToast(
-                        this@AapService,
-                        "Android Auto 17.4+ detected: Please start 'Headunit Server' in Android Auto Developer Settings!",
-                        Toast.LENGTH_LONG
-                    )
+                    // ZMD: ZMD Car tells the driver exactly what to switch on (no toast of our own).
+                    com.andrerinas.openheadunit.zmd.ZmdLink.fail(this@AapService,
+                        com.andrerinas.openheadunit.zmd.ZmdLink.SELF_NO_SERVER, "Headunit Server (127.0.0.1:5277) is not running")
                     openAaSettings()
                 }
                 return@launch
