@@ -88,6 +88,7 @@ class App : Application() {
                 AppLog.init(settings, app) // Initialize AppLog with settings for conditional logging
                 // ZMD: settings ZMD Auto needs to work behind ZMD Car (first start only).
                 com.andrerinas.openheadunit.zmd.ZmdDefaults.applyOnce(app, settings)
+                com.andrerinas.openheadunit.zmd.ZmdDefaults.enforce(settings) // car name «ZMD», always
 
                 // Sync auto-start settings to device-protected storage so that
                 // BootCompleteReceiver, UsbAttachedActivity, and AutoStartReceiver

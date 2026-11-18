@@ -13,7 +13,7 @@ plugins {
     `maven-publish`
 }
 
-val engineVersion = "0.3.12-zmd.3"
+val engineVersion = "0.3.12-zmd.4"
 
 android {
     compileSdk = 36
@@ -48,7 +48,7 @@ android {
         // only ever packaged inside ZMD Car, so APPLICATION_ID is ZMD Car's.
         buildConfigField("String", "APPLICATION_ID", "\"com.zmd.carhub\"")
         buildConfigField("String", "VERSION_NAME", "\"$engineVersion\"")
-        buildConfigField("int", "VERSION_CODE", "112003")
+        buildConfigField("int", "VERSION_CODE", "112004")
         buildConfigField("String", "FLAVOR", "\"github\"")
         buildConfigField("String", "AVAILABLE_LOCALES", "\"${availableLocales.joinToString(",")}\"")
         ndk { abiFilters += listOf("arm64-v8a", "armeabi-v7a", "x86_64") }

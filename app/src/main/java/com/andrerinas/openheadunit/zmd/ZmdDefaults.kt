@@ -30,4 +30,12 @@ object ZmdDefaults {
         p.edit().putBoolean(KEY_APPLIED, true).apply()
         AppLog.i("ZMD: first start, ZMD Auto defaults applied (cable, auto-connect, no own screens)")
     }
+
+    /** The car's name the phone shows (Android Auto's welcome screen and connection history). Fixed. */
+    const val CAR_NAME = "ZMD"
+
+    /** Settings that always hold, every start (the user asked for the car name to stay «ZMD»). */
+    fun enforce(s: Settings) {
+        if (s.vehicleDisplayName != CAR_NAME) s.vehicleDisplayName = CAR_NAME
+    }
 }
